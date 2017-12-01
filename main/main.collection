@@ -1,10 +1,10 @@
 name: "main"
 collection_instances {
-  id: "ground"
-  collection: "/main/ground.collection"
+  id: "level"
+  collection: "/main/level/level.collection"
   position {
     x: 0.0
-    y: 0.0
+    y: 60.0
     z: 0.0
   }
   rotation {
