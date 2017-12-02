@@ -1,8 +1,11 @@
 images {
-  image: "/main/runner-assets/level-images/ground01.png"
+  image: "/main/level/level-images/ground01.png"
 }
 images {
-  image: "/main/runner-assets/level-images/ground02.png"
+  image: "/main/level/level-images/ground02.png"
+}
+images {
+  image: "/main/level/level-images/rock_planks.png"
 }
 margin: 0
 extrude_borders: 0

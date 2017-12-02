@@ -1,0 +1,22 @@
+local PLATFORM_WIDTH = 500
+
+function init(self)
+    self.speed = 540 -- Default speed in pixels/s
+end
+
+function update(self, timeSinceLastCall)
+    local position = go.get_position()
+    
+    if position.x < -PLATFORM_WIDTH then
+        go.delete() 
+    end
+    
+    position.x = position.x - self.speed * timeSinceLastCall
+    go.set_position(position)
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("set_speed") then
+        self.speed = message.speed
+    end
+end
