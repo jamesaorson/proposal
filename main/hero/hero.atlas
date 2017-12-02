@@ -1,98 +1,98 @@
 images {
-  image: "/main/hero/hero-images/ArmL01.png"
+  image: "/main/hero/images/ArmL01.png"
 }
 images {
-  image: "/main/hero/hero-images/ArmL02.png"
+  image: "/main/hero/images/ArmL02.png"
 }
 images {
-  image: "/main/hero/hero-images/ArmL03.png"
+  image: "/main/hero/images/ArmL03.png"
 }
 images {
-  image: "/main/hero/hero-images/ArmR01.png"
+  image: "/main/hero/images/ArmR01.png"
 }
 images {
-  image: "/main/hero/hero-images/ArmR02.png"
+  image: "/main/hero/images/ArmR02.png"
 }
 images {
-  image: "/main/hero/hero-images/ArmR03.png"
+  image: "/main/hero/images/ArmR03.png"
 }
 images {
-  image: "/main/hero/hero-images/BodyA01.png"
+  image: "/main/hero/images/BodyA01.png"
 }
 images {
-  image: "/main/hero/hero-images/BodyA02.png"
+  image: "/main/hero/images/BodyA02.png"
 }
 images {
-  image: "/main/hero/hero-images/BodyB01.png"
+  image: "/main/hero/images/BodyB01.png"
 }
 images {
-  image: "/main/hero/hero-images/BodyB02.png"
+  image: "/main/hero/images/BodyB02.png"
 }
 images {
-  image: "/main/hero/hero-images/Eye01.png"
+  image: "/main/hero/images/Eye01.png"
 }
 images {
-  image: "/main/hero/hero-images/Head01.png"
+  image: "/main/hero/images/Head01.png"
 }
 images {
-  image: "/main/hero/hero-images/Head02.png"
+  image: "/main/hero/images/Head02.png"
 }
 images {
-  image: "/main/hero/hero-images/Head02B.png"
+  image: "/main/hero/images/Head02B.png"
 }
 images {
-  image: "/main/hero/hero-images/Head03.png"
+  image: "/main/hero/images/Head03.png"
 }
 images {
-  image: "/main/hero/hero-images/Head03B.png"
+  image: "/main/hero/images/Head03B.png"
 }
 images {
-  image: "/main/hero/hero-images/LegB01.png"
+  image: "/main/hero/images/LegB01.png"
 }
 images {
-  image: "/main/hero/hero-images/LegB02.png"
+  image: "/main/hero/images/LegB02.png"
 }
 images {
-  image: "/main/hero/hero-images/LegB03.png"
+  image: "/main/hero/images/LegB03.png"
 }
 images {
-  image: "/main/hero/hero-images/LegB04.png"
+  image: "/main/hero/images/LegB04.png"
 }
 images {
-  image: "/main/hero/hero-images/LegL00.png"
+  image: "/main/hero/images/LegL00.png"
 }
 images {
-  image: "/main/hero/hero-images/LegLA01.png"
+  image: "/main/hero/images/LegLA01.png"
 }
 images {
-  image: "/main/hero/hero-images/LegLA02.png"
+  image: "/main/hero/images/LegLA02.png"
 }
 images {
-  image: "/main/hero/hero-images/LegLA03.png"
+  image: "/main/hero/images/LegLA03.png"
 }
 images {
-  image: "/main/hero/hero-images/LegLA04.png"
+  image: "/main/hero/images/LegLA04.png"
 }
 images {
-  image: "/main/hero/hero-images/LegR00.png"
+  image: "/main/hero/images/LegR00.png"
 }
 images {
-  image: "/main/hero/hero-images/LegRA01.png"
+  image: "/main/hero/images/LegRA01.png"
 }
 images {
-  image: "/main/hero/hero-images/LegRA02.png"
+  image: "/main/hero/images/LegRA02.png"
 }
 images {
-  image: "/main/hero/hero-images/LegRA03.png"
+  image: "/main/hero/images/LegRA03.png"
 }
 images {
-  image: "/main/hero/hero-images/LegRA04.png"
+  image: "/main/hero/images/LegRA04.png"
 }
 images {
-  image: "/main/hero/hero-images/ThighL.png"
+  image: "/main/hero/images/ThighL.png"
 }
 images {
-  image: "/main/hero/hero-images/ThighR.png"
+  image: "/main/hero/images/ThighR.png"
 }
 margin: 0
 extrude_borders: 0

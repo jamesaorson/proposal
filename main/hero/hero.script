@@ -2,20 +2,40 @@ local GRAVITY = -50
 local JUMP_TAKEOFF_SPEED = 900
 
 function init(self)
-    -- This tells the engine to send input to on_input() in this script
+    -- This lets us handle input in this script
     msg.post(".", "acquire_input_focus")
-
-    -- Save the starting position
+    
+    -- Save position
     self.position = go.get_position()
-
-    -- Keep track of movement vector and if there is ground contact
-    self.velocity = vmath.vector3(0, 0, 0)
-    self.ground_contact = false
+    msg.post("#", "reset")
 end
 
 function final(self)
     -- Return input focus when the object is deleted
     msg.post(".", "release_input_focus")
+end
+
+local function play_animation(self, animation)
+    -- Only play animations which are not already playing
+    if self.animation ~= animation then
+        -- Tell the spine model to play the animation
+        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
+        -- Remember which animation is playing
+        self.animation = animation
+    end
+end
+
+local function update_animation(self)
+    -- make sure the right animation is playing
+    if self.ground_contact then
+        play_animation(self, hash("run_right"))
+    else
+        if self.velocity.y > 0 then
+            play_animation(self, hash("jump_right"))
+        else
+            play_animation(self, hash("fall_right"))
+        end
+    end
 end
 
 function update(self, timeSinceLastCall)
@@ -28,6 +48,8 @@ function update(self, timeSinceLastCall)
 
     -- Apply velocity to the player character
     go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
+    
+    update_animation(self)
 
     -- Reset volatile state
     self.correction = vmath.vector3()
@@ -59,9 +81,31 @@ local function handle_geometry_contact(self, normal, distance)
 end
 
 function on_message(self, message_id, message, sender)
-    if message_id == hash("contact_point_response") then
-        -- Check if we received a contact point message. One message for each contact point
-        if message.group == hash("geometry") then
+    if message_id == hash("reset") then
+        self.velocity = vmath.vector3(0, 0, 0)
+        self.correction = vmath.vector3()
+        self.ground_contact = false
+        self.animation = nil
+        
+        go.set(".", "euler.z", 0)
+        go.set_position(self.position)
+        msg.post("#collisionobject", "enable")
+
+    elseif message_id == hash("contact_point_response") then
+        -- Check if we received a contact point message
+        if message.group == hash("danger") then
+            -- Die and restart
+            play_animation(self, hash("die_right"))
+            msg.post("#collisionobject", "disable")
+            -- Add rotation and fall movement to hero as it dies. This can be greatly improved!
+            
+            -- go.animate(url, property, playback, to, easing, duration, [delay], [complete_function])
+            go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, 160, go.EASING_LINEAR, 0.7)
+            go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, go.get_position().y - 200, go.EASING_INSINE, 0.5, 0.2,
+                function()
+                    msg.post("#", "reset")
+                end)
+        elseif message.group == hash("geometry") then
             handle_geometry_contact(self, message.normal, message.distance)
         end
     end
