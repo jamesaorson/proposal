@@ -4,7 +4,7 @@ instances {
   prototype: "/main/hero/hero.go"
   position {
     x: 50.0
-    y: 82.0
+    y: 138.0
     z: 0.0
   }
   rotation {
@@ -56,16 +56,11 @@ embedded_instances {
   "    z: 0.0\n"
   "    w: 1.0\n"
   "  }\n"
-  "  properties {\n"
-  "    id: \"speed\"\n"
-  "    value: \"360.0\"\n"
-  "    type: PROPERTY_TYPE_NUMBER\n"
-  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"platform_factory\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/main/level/objects/platform_long.go\\\"\\n"
+  "  data: \"prototype: \\\"/main/level/platform/platform_long.go\\\"\\n"
   "load_dynamically: false\\n"
   "\"\n"
   "  position {\n"
@@ -83,7 +78,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"platform_long_factory\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/main/level/objects/platform.go\\\"\\n"
+  "  data: \"prototype: \\\"/main/level/platform/platform.go\\\"\\n"
   "load_dynamically: false\\n"
   "\"\n"
   "  position {\n"

@@ -14,28 +14,28 @@ local GROUND_WIDTH = 228
 local OFF_SCREEN_LEFT = -GROUND_WIDTH
 local RIGHT_OF_GROUND = GROUND_WIDTH * (table.getn(pieces) - 1)
 
--- The init() function is called when the game object comes to life in the game. We initiate a object local member variable that contains the speed of the ground.
+-- The init() function is called when the game object comes to life in the game. We initiate a object local member variable that contains the velocity of the ground.
 function init(self) 
-    self.speed = 360  -- Speed in pixels/s
+    self.velocity = 360  -- Speed in pixels/s
 end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
 function update(self, timeSinceLastCall) 
 	-- Iterate over all the ground game objects.
     for i, piece in ipairs(pieces) do 
-        local pos = go.get_position(piece)
+        local position = go.get_position(piece)
         
-        if pos.x <= OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
-            pos.x = RIGHT_OF_GROUND + (pos.x + GROUND_WIDTH)
+        if position.x <= OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+            position.x = RIGHT_OF_GROUND + (position.x + GROUND_WIDTH)
         end
         
-		pos.x = pos.x - self.speed * timeSinceLastCall -- Decrease the current X-position with the set speed. Multiply with dt to get framerate independent speed in pixels/s.
-        go.set_position(pos, piece) -- Update the object’s position with the new speed.
+		position.x = position.x - self.velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+        go.set_position(position, piece) -- Update the object’s position with the new velocity.
     end
 end
 
 function on_message(self, message_id, message, sender)
-    if message_id == hash("set_speed") then 
-        self.speed = message.speed 
+    if message_id == hash("set_velocity") then 
+        self.velocity = message.velocity 
     end
 end

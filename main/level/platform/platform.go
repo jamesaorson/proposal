@@ -1,6 +1,6 @@
 components {
   id: "platform"
-  component: "/main/level/objects/platform.script"
+  component: "/main/level/platform/platform.script"
   position {
     x: 0.0
     y: 0.0
@@ -89,8 +89,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: -203.0
-    y: 0.0
+    x: -180.0
+    y: -11.0
     z: -0.1
   }
   rotation {
@@ -109,8 +109,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: 207.0
-    y: 5.0
+    x: 180.0
+    y: -11.0
     z: -0.1
   }
   rotation {
@@ -130,7 +130,7 @@ embedded_components {
   ""
   position {
     x: -91.0
-    y: -88.0
+    y: -86.0
     z: -0.1
   }
   rotation {
@@ -150,7 +150,7 @@ embedded_components {
   ""
   position {
     x: 100.0
-    y: -88.0
+    y: -86.0
     z: -0.1
   }
   rotation {
@@ -175,7 +175,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: -91.0\n"
-  "      y: -88.0\n"
+  "      y: -86.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -191,7 +191,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 100.0\n"
-  "      y: -88.0\n"
+  "      y: -86.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -206,8 +206,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: -203.0\n"
-  "      y: 0.0\n"
+  "      x: -181.0\n"
+  "      y: -11.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -222,8 +222,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: 207.0\n"
-  "      y: 5.0\n"
+  "      x: 181.0\n"
+  "      y: -11.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -251,6 +251,24 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "coin_factory"
+  type: "factory"
+  data: "prototype: \"/main/level/coin/coin.go\"\n"
+  "load_dynamically: false\n"
   ""
   position {
     x: 0.0

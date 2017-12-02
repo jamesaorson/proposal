@@ -1,5 +1,9 @@
+function determine_initial_jump_speed(gravity)
+	return 200 * math.sqrt(-1 * gravity)
+end
+
 local GRAVITY = -50
-local JUMP_TAKEOFF_SPEED = 900
+local INITIAL_JUMP_VELOCITY = determine_initial_jump_speed(GRAVITY)
 
 function init(self)
     -- This lets us handle input in this script
@@ -62,17 +66,21 @@ local function handle_geometry_contact(self, normal, distance)
     local projection = vmath.dot(self.correction, normal)
     -- Calculate the compensation we need to make for this contact point
     local compensation = (distance - projection) * normal
+    
     -- Add it to the correction vector
     self.correction = self.correction + compensation
     -- Apply the compensation to the player character
     go.set_position(go.get_position() + compensation)
+    
     -- Check if the normal points enough up to consider the player standing on the ground
     -- (0.7 is roughly equal to 45 degrees deviation from pure vertical direction)
     if normal.y > 0.7 then
         self.ground_contact = true
     end
+    
     -- Project the velocity onto the normal
     projection = vmath.dot(self.velocity, normal)
+    
     -- If the projection is negative, it means that some of the velocity points towards the contact point
     if projection < 0 then
         -- Remove that component in that case
@@ -103,7 +111,7 @@ function on_message(self, message_id, message, sender)
             go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, 160, go.EASING_LINEAR, 0.7)
             go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, go.get_position().y - 200, go.EASING_INSINE, 0.5, 0.2,
                 function()
-                    msg.post("#", "reset")
+                    msg.post("controller#script", "reset")
                 end)
         elseif message.group == hash("geometry") then
             handle_geometry_contact(self, message.normal, message.distance)
@@ -114,15 +122,15 @@ end
 local function jump(self)
     -- only allow jump from ground
     if self.ground_contact then
-        -- set take-off speed
-        self.velocity.y = JUMP_TAKEOFF_SPEED
+        -- set initial jump velocity
+        self.velocity.y = INITIAL_JUMP_VELOCITY
     end
 end
 
 local function abort_jump(self)
     -- Cut the jump short if we are still going up
     if self.velocity.y > 0 then
-        -- Scale down the upwards speed
+        -- Scale down the upwards velocity
         self.velocity.y = self.velocity.y * 0.5
     end
 end

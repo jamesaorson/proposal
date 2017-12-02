@@ -1,15 +1,18 @@
-go.property("speed", 360)
+go.property("velocity", 360)
 
-local GRID = 460
+local GRID = 500
 local PLATFORM_HEIGHTS = { 100, 200, 350 } 
+local NUM_COINS = 3
 
 function init(self)
-    msg.post("ground/controller#script", "set_speed", { speed = self.speed })
+    msg.post("ground/controller#script", "set_velocity", { velocity = self.velocity })
     self.gridw = 0
+    -- Use a table to store all spawned platforms
+    self.platforms = {}
 end
 
 function update(self, timeSinceLastCall) 
-    self.gridw = self.gridw + self.speed * timeSinceLastCall
+    self.gridw = self.gridw + self.velocity * timeSinceLastCall
 
     if self.gridw >= GRID then
         self.gridw = 0
@@ -19,8 +22,10 @@ function update(self, timeSinceLastCall)
             local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]            
 			local url = "#platform_factory"
             
+            local num_coins = NUM_COINS
 			if math.random() > 0.5 then
                 url = "#platform_long_factory"
+                num_coins = num_coins * 2
             end
             
             local position = vmath.vector3(1600, height, 0)
@@ -29,7 +34,33 @@ function update(self, timeSinceLastCall)
             local scale = 0.6
 
             local platform = factory.create(url, position, rotation, properties, scale)
-            msg.post(platform, "set_speed", { speed = self.speed })
+            
+            msg.post(platform, "set_velocity", { velocity = self.velocity })
+            msg.post(platform, "create_coins", { coins = num_coins })
+            table.insert(self.platforms, platform)
+        end
+    end
+end
+
+function on_message(self, message_id, message, sender)
+	-- The “reset” message deletes all platforms stored in the table
+    if message_id == hash("reset") then 
+        -- Tell the hero to reset.
+        msg.post("hero#script", "reset")
+        
+		-- Delete all platforms
+        for i, platform in ipairs(self.platforms) do
+            go.delete(platform)
+        end
+        
+        self.platforms = {}
+    -- The “delete_spawn” message deletes a particular platform and removes it from the table
+    elseif message_id == hash("delete_spawn") then 
+        for i, platform in ipairs(self.platforms) do
+            if platform == message.id then
+                table.remove(self.platforms, i)
+                go.delete(platform)
+            end
         end
     end
 end
