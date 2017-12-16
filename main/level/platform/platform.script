@@ -2,7 +2,6 @@ local PLATFORM_WIDTH = 500
 
 function init(self)
 	-- Default velocity in pixels/s
-    self.velocity = 540
     self.coins = {}
 end
 
@@ -21,6 +20,8 @@ function update(self, timeSinceLastCall)
     
     position.x = position.x - self.velocity * timeSinceLastCall
     go.set_position(position)
+    
+    self.velocity = self.velocity + 0.1
 end
 
 function create_coins(self, params)

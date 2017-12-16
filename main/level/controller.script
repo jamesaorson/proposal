@@ -9,9 +9,11 @@ function init(self)
     self.gridw = 0
     -- Use a table to store all spawned platforms
     self.platforms = {}
+    self.coinsCollected = 0
 end
 
-function update(self, timeSinceLastCall) 
+function update(self, timeSinceLastCall)
+	self.velocity = self.velocity + 0.1
     self.gridw = self.gridw + self.velocity * timeSinceLastCall
 
     if self.gridw >= GRID then
@@ -62,5 +64,8 @@ function on_message(self, message_id, message, sender)
                 go.delete(platform)
             end
         end
-    end
+    elseif message_id == hash("coin_collection") then
+    	self.coinsCollected = self.coinsCollected + 1
+    	label.set_text("score#score", self.coinsCollected)
+	end
 end

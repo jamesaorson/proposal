@@ -81,46 +81,6 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "left_spike"
-  type: "sprite"
-  data: "tile_set: \"/main/level/level.atlas\"\n"
-  "default_animation: \"spikes\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: -180.0
-    y: -11.0
-    z: -0.1
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "right_spike"
-  type: "sprite"
-  data: "tile_set: \"/main/level/level.atlas\"\n"
-  "default_animation: \"spikes\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: 180.0
-    y: -11.0
-    z: -0.1
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: -1.0
-    w: 6.123234E-17
-  }
-}
-embedded_components {
   id: "bottom_left_spike"
   type: "sprite"
   data: "tile_set: \"/main/level/level.atlas\"\n"
@@ -203,44 +163,6 @@ embedded_components {
   "    index: 3\n"
   "    count: 3\n"
   "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_BOX\n"
-  "    position {\n"
-  "      x: -181.0\n"
-  "      y: -11.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.70710677\n"
-  "      w: 0.70710677\n"
-  "    }\n"
-  "    index: 6\n"
-  "    count: 3\n"
-  "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_BOX\n"
-  "    position {\n"
-  "      x: 181.0\n"
-  "      y: -11.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.70710677\n"
-  "      w: 0.70710677\n"
-  "    }\n"
-  "    index: 9\n"
-  "    count: 3\n"
-  "  }\n"
-  "  data: 65.162\n"
-  "  data: 25.0445\n"
-  "  data: 10.0\n"
-  "  data: 65.162\n"
-  "  data: 25.0445\n"
-  "  data: 10.0\n"
   "  data: 65.162\n"
   "  data: 25.0445\n"
   "  data: 10.0\n"

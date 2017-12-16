@@ -16,7 +16,7 @@ local RIGHT_OF_GROUND = GROUND_WIDTH * (table.getn(pieces) - 1)
 
 -- The init() function is called when the game object comes to life in the game. We initiate a object local member variable that contains the velocity of the ground.
 function init(self) 
-    self.velocity = 360  -- Speed in pixels/s
+--     self.velocity = 360  -- Speed in pixels/s
 end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
@@ -32,10 +32,12 @@ function update(self, timeSinceLastCall)
 		position.x = position.x - self.velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
         go.set_position(position, piece) -- Update the object’s position with the new velocity.
     end
+    
+    self.velocity = self.velocity + 0.1
 end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("set_velocity") then 
-        self.velocity = message.velocity 
+    	self.velocity = message.velocity 
     end
 end

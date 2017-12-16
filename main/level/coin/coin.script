@@ -6,6 +6,7 @@ function on_message(self, message_id, message, sender)
     if self.collected == false and message_id == hash("collision_response") then
         self.collected = true
         msg.post("#sprite", "disable")
+        msg.post("/level/controller#script", "coin_collection")
     elseif message_id == hash("start_animation") then
         pos = go.get_position()
         -- go.animate(url, property, playback, to, easing, duration, [delay], [complete_function])
