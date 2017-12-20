@@ -23,9 +23,6 @@ images {
   image: "/main/hero/images/Head02B.png"
 }
 images {
-  image: "/main/hero/images/Head03B.png"
-}
-images {
   image: "/main/hero/images/LegB01.png"
 }
 images {
@@ -60,12 +57,6 @@ images {
 }
 images {
   image: "/main/hero/images/Head02.png"
-}
-images {
-  image: "/main/hero/images/Head02B.png"
-}
-images {
-  image: "/main/hero/images/Head03.png"
 }
 images {
   image: "/main/hero/images/Head03B.png"

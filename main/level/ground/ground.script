@@ -15,8 +15,8 @@ local OFF_SCREEN_LEFT = -GROUND_WIDTH
 local RIGHT_OF_GROUND = GROUND_WIDTH * (table.getn(pieces) - 1)
 
 -- The init() function is called when the game object comes to life in the game. We initiate a object local member variable that contains the velocity of the ground.
-function init(self) 
---     self.velocity = 360  -- Speed in pixels/s
+function init(self)
+	
 end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.

@@ -13,6 +13,21 @@ images {
 images {
   image: "/main/level/images/coin.png"
 }
+images {
+  image: "/main/level/images/bg.png"
+}
+images {
+  image: "/main/level/images/earthlike_planet.png"
+}
+images {
+  image: "/main/level/images/gas_planet.png"
+}
+images {
+  image: "/main/level/images/ice_planet.png"
+}
+images {
+  image: "/main/level/images/ring_planet.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

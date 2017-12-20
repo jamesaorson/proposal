@@ -1,8 +1,9 @@
-go.property("velocity", 360)
-
+local DEFAULT_VELOCITY = 360
 local GRID = 500
 local PLATFORM_HEIGHTS = { 100, 200, 350 } 
 local NUM_COINS = 3
+
+go.property("velocity", 360)
 
 function init(self)
     msg.post("ground/controller#script", "set_velocity", { velocity = self.velocity })
@@ -39,6 +40,7 @@ function update(self, timeSinceLastCall)
             
             msg.post(platform, "set_velocity", { velocity = self.velocity })
             msg.post(platform, "create_coins", { coins = num_coins })
+            
             table.insert(self.platforms, platform)
         end
     end
@@ -56,8 +58,15 @@ function on_message(self, message_id, message, sender)
         end
         
         self.platforms = {}
-    -- The “delete_spawn” message deletes a particular platform and removes it from the table
-    elseif message_id == hash("delete_spawn") then 
+        
+        self.coinsCollected = 0
+    	label.set_text("score#score", 0)
+		    	
+		self.velocity = DEFAULT_VELOCITY
+    	
+    	msg.post("ground/controller#script", "set_velocity", { velocity = self.velocity })
+    	msg.post("background/controller#script", "reset")
+    elseif message_id == hash("delete_spawn") then -- The “delete_spawn” message deletes a particular platform and removes it from the table
         for i, platform in ipairs(self.platforms) do
             if platform == message.id then
                 table.remove(self.platforms, i)

@@ -1,0 +1,97 @@
+local backgrounds = {
+	"background0",
+	"background1"
+}
+
+local original_planets = {
+	"earthlike",
+	"gas",
+	"ice",
+	"ring"
+}
+
+local velocities = {
+	90,
+	120,
+	180,
+	270
+}
+
+local BACKGROUND_WIDTH = 1280
+local BACKGROUND_OFF_SCREEN_LEFT = -BACKGROUND_WIDTH / 2
+local RIGHT_OF_BACKGROUND = BACKGROUND_WIDTH * (table.getn(backgrounds) - 1)
+
+local PLANET_WIDTH = 95
+local PLANET_OFF_SCREEN_LEFT = -PLANET_WIDTH * 2
+
+function init(self)
+	self.background_velocity = 90
+	self.planets = {}
+	self.planet_velocities = {}
+end
+
+-- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
+function update(self, timeSinceLastCall) 
+	-- Iterate over all the ground game objects.
+    for i, background in ipairs(backgrounds) do 
+        local position = go.get_position(background)
+        
+        if position.x <= BACKGROUND_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+            position.x = RIGHT_OF_BACKGROUND + (position.x + BACKGROUND_WIDTH)
+            msg.post("controller#script", "create_planets", { planets = math.random(4), piece = background })
+        end
+        
+		position.x = position.x - self.background_velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+        go.set_position(position, background) -- Update the object’s position with the new velocity.
+    end
+    
+    for i, planet in ipairs(self.planets) do
+        local position = go.get_position(planet)
+        
+        if position.x <= PLANET_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+        	table.remove(self.planets, i)
+        	table.remove(self.planet_velocities, i)
+			go.delete(planet)
+        else
+        	position.x = position.x - self.planet_velocities[i] * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+        	go.set_position(position, planet) -- Update the object’s position with the new velocity.
+        end
+    end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("create_planets") then
+		local planets = copy_table(original_planets)
+		
+		local old_random = math.random
+		
+        for i = 1, message.planets do
+        	local planet_index = math.random(#planets)
+        	local planet = planets[planet_index]
+        	table.remove(planets, planet_index)
+        	
+        	local url = message.piece .. "#" .. planet .. "_planet_factory"
+        	local position = vmath.vector3(1280 + math.random(1280), math.random(100, 675), -0.2)
+        	local planet = factory.create(url, position)
+        	
+        	table.insert(self.planets, planet)
+        	table.insert(self.planet_velocities, velocities[math.random(#velocities)])
+    	end
+    elseif message_id == hash("reset") then
+    	for i, planet in ipairs(self.planets) do
+			go.delete(planet)
+		end
+		
+		self.planets = {}
+		self.velocitie = {}
+    end
+end
+
+function copy_table(t)
+	local u = { }
+	for k, v in pairs(t) do
+		u[k] = v
+	end
+
+	return setmetatable(u, getmetatable(t))
+end

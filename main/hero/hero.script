@@ -57,7 +57,6 @@ function update(self, timeSinceLastCall)
     update_animation(self)
     
     if self.originalXPosition - 15 > self.position.x then
-    	print('\n\n\nforce reset\n\n\n')
     	msg.post("controller#script", "reset")
 	end
 
