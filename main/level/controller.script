@@ -1,9 +1,9 @@
-local DEFAULT_VELOCITY = 360
+local DEFAULT_VELOCITY = 450
 local GRID = 500
 local PLATFORM_HEIGHTS = { 100, 200, 350 } 
 local NUM_COINS = 3
 
-go.property("velocity", 360)
+go.property("velocity", 450)
 
 function init(self)
     msg.post("ground/controller#script", "set_velocity", { velocity = self.velocity })
@@ -21,8 +21,9 @@ function update(self, timeSinceLastCall)
 	        self.gridw = 0
 
 	        -- Maybe spawn a platform at random height
-	        if math.random() > 0.2 then
-	            local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]            
+			if math.random() > 0.2 then
+				print('create ' .. self.game_mode)
+	            local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]
 				local url = "#platform_factory"
 	            
 	            local num_coins = NUM_COINS
@@ -76,6 +77,8 @@ function on_message(self, message_id, message, sender)
         end
     elseif message_id == hash("coin_collection") then
     	self.coinsCollected = self.coinsCollected + 1
-    	label.set_text("score#score", self.coinsCollected)
+		label.set_text("score#score", self.coinsCollected)
+	elseif message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
 	end
 end

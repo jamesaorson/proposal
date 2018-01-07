@@ -17,10 +17,17 @@ function final(self)
 end
 
 function update(self, dt)
-	if os.difftime(os.time(), self.start_time) > 2 then
-		self.game_mode = GAME_MODES[2]
-		
-		send_game_mode_message(self.game_mode)
+	if self.game_mode == GAME_MODES[1] then
+		if os.difftime(os.time(), self.start_time) > 2 and os.difftime(os.time(), self.start_time) < 4 then
+			msg.post("unicorn#script", "set_animation", { animation = 'run_right' })
+		end
+		if os.difftime(os.time(), self.start_time) > 4 then
+			self.game_mode = GAME_MODES[2]
+			
+			send_game_mode_message(self.game_mode)
+		end
+	elseif self.game_mode == GAME_MODES[2] then
+	elseif self.game_mode == GAME_MODES[3] then
 	end
 end
 
@@ -31,7 +38,9 @@ end
 
 function send_game_mode_message(mode)
 	msg.post("hero#script", "set_game_mode", { game_mode = mode })
-	msg.post("ground/controller#script", "set_game_mode", { game_mode = mode })
 	msg.post("unicorn#script", "set_game_mode", { game_mode = mode })
+
+	msg.post("controller#script", "set_game_mode", { game_mode = mode })
+	msg.post("ground/controller#script", "set_game_mode", { game_mode = mode })	
 	msg.post("background/controller#script", "set_game_mode", { game_mode = mode })
 end
