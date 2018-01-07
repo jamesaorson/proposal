@@ -1,4 +1,4 @@
-local GAME_MODES = {
+GAME_MODES = {
 	'beginning_animation',
 	'play',
 	'ending_animation'
@@ -9,6 +9,7 @@ function init(self)
 	msg.post("hero#script", "set_game_mode", { game_mode = self.game_mode })
 	msg.post("ground/controller#script", "set_game_mode", { game_mode = self.game_mode })
 	msg.post("unicorn#script", "set_game_mode", { game_mode = self.game_mode })
+	msg.post("background/controller#script", "set_game_mode", { game_mode = self.game_mode })
 end
 
 function final(self)

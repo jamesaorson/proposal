@@ -31,32 +31,34 @@ function init(self)
 end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
-function update(self, timeSinceLastCall) 
-	-- Iterate over all the ground game objects.
-    for i, background in ipairs(backgrounds) do 
-        local position = go.get_position(background)
-        
-        if position.x <= BACKGROUND_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
-            position.x = RIGHT_OF_BACKGROUND + (position.x + BACKGROUND_WIDTH)
-            msg.post("controller#script", "create_planets", { planets = math.random(4), piece = background })
-        end
-        
-		position.x = position.x - self.background_velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
-        go.set_position(position, background) -- Update the object’s position with the new velocity.
-    end
-    
-    for i, planet in ipairs(self.planets) do
-        local position = go.get_position(planet)
-        
-        if position.x <= PLANET_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
-        	table.remove(self.planets, i)
-        	table.remove(self.planet_velocities, i)
-			go.delete(planet)
-        else
-        	position.x = position.x - self.planet_velocities[i] * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
-        	go.set_position(position, planet) -- Update the object’s position with the new velocity.
-        end
-    end
+function update(self, timeSinceLastCall)
+	if self.game_mode ~= GAME_MODES[1] then
+		-- Iterate over all the ground game sobjects.
+	    for i, background in ipairs(backgrounds) do 
+	        local position = go.get_position(background)
+	        
+	        if position.x <= BACKGROUND_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+	            position.x = RIGHT_OF_BACKGROUND + (position.x + BACKGROUND_WIDTH)
+	            msg.post("controller#script", "create_planets", { planets = math.random(4), piece = background })
+	        end
+	        
+			position.x = position.x - self.background_velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+	        go.set_position(position, background) -- Update the object’s position with the new velocity.
+	    end
+	    
+	    for i, planet in ipairs(self.planets) do
+	        local position = go.get_position(planet)
+	        
+	        if position.x <= PLANET_OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+	        	table.remove(self.planets, i)
+	        	table.remove(self.planet_velocities, i)
+				go.delete(planet)
+	        else
+	        	position.x = position.x - self.planet_velocities[i] * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+	        	go.set_position(position, planet) -- Update the object’s position with the new velocity.
+	        end
+		end
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -84,6 +86,9 @@ function on_message(self, message_id, message, sender)
 		
 		self.planets = {}
 		self.velocitie = {}
+	elseif message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
+		print('background ' .. self.game_mode)
     end
 end
 

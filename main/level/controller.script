@@ -14,35 +14,37 @@ function init(self)
 end
 
 function update(self, timeSinceLastCall)
-    self.gridw = self.gridw + self.velocity * timeSinceLastCall
+	if self.game_mode ~= GAME_MODES[1] then
+	    self.gridw = self.gridw + self.velocity * timeSinceLastCall
 
-    if self.gridw >= GRID then
-        self.gridw = 0
+	    if self.gridw >= GRID then
+	        self.gridw = 0
 
-        -- Maybe spawn a platform at random height
-        if math.random() > 0.2 then
-            local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]            
-			local url = "#platform_factory"
-            
-            local num_coins = NUM_COINS
-			if math.random() > 0.5 then
-                url = "#platform_long_factory"
-                num_coins = num_coins * 2
-            end
-            
-            local position = vmath.vector3(1600, height, 0)
-            local rotation = nil
-            local properties = {}
-            local scale = 0.6
+	        -- Maybe spawn a platform at random height
+	        if math.random() > 0.2 then
+	            local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]            
+				local url = "#platform_factory"
+	            
+	            local num_coins = NUM_COINS
+				if math.random() > 0.5 then
+	                url = "#platform_long_factory"
+	                num_coins = num_coins * 2
+	            end
+	            
+	            local position = vmath.vector3(1600, height, 0)
+	            local rotation = nil
+	            local properties = {}
+	            local scale = 0.6
 
-            local platform = factory.create(url, position, rotation, properties, scale)
-            
-            msg.post(platform, "set_velocity", { velocity = self.velocity })
-            msg.post(platform, "create_coins", { coins = num_coins })
-            
-            table.insert(self.platforms, platform)
-        end
-    end
+	            local platform = factory.create(url, position, rotation, properties, scale)
+	            
+	            msg.post(platform, "set_velocity", { velocity = self.velocity })
+	            msg.post(platform, "create_coins", { coins = num_coins })
+	            
+	            table.insert(self.platforms, platform)
+	        end
+		end
+	end
 end
 
 function on_message(self, message_id, message, sender)

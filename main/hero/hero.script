@@ -21,48 +21,54 @@ function final(self)
 end
 
 local function play_animation(self, animation)
-    -- Only play animations which are not already playing
-    if self.animation ~= animation then
-        -- Tell the spine model to play the animation
-        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
-        -- Remember which animation is playing
-        self.animation = animation
-    end
+	if self.game_mode ~= GAME_MODES[1] then
+	    -- Only play animations which are not already playing
+	    if self.animation ~= animation then
+	        -- Tell the spine model to play the animation
+	        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
+	        -- Remember which animation is playing
+	        self.animation = animation
+		end
+	end
 end
 
 local function update_animation(self)
-    -- make sure the right animation is playing
-    if self.ground_contact then
-        play_animation(self, hash("run_right"))
-    else
-        if self.velocity.y > 0 then
-            play_animation(self, hash("jump_right"))
-        else
-            play_animation(self, hash("fall_right"))
-        end
-    end
+	if self.game_mode ~= GAME_MODES[1] then
+	    -- make sure the right animation is playing
+	    if self.ground_contact then
+	        play_animation(self, hash("run_right"))
+	    else
+	        if self.velocity.y > 0 then
+	            play_animation(self, hash("jump_right"))
+	        else
+	            play_animation(self, hash("fall_right"))
+	        end
+		end
+	end
 end
 
-function update(self, timeSinceLastCall)        
-    local GRAVITY = vmath.vector3(0, GRAVITY, 0)
+function update(self, timeSinceLastCall)
+	if self.game_mode ~= GAME_MODES[1] then
+	    local GRAVITY = vmath.vector3(0, GRAVITY, 0)
 
-    if not self.ground_contact then
-        -- Apply gravity if there's no ground contact
-        self.velocity = self.velocity + GRAVITY
-    end
+	    if not self.ground_contact then
+	        -- Apply gravity if there's no ground contact
+	        self.velocity = self.velocity + GRAVITY
+	    end
 
-    -- Apply velocity to the player character
-    go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
-    
-    update_animation(self)
-    
-    if self.originalXPosition - 15 > self.position.x then
-    	msg.post("controller#script", "reset")
+	    -- Apply velocity to the player character
+	    go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
+	    
+	    update_animation(self)
+	    
+	    if self.originalXPosition - 15 > self.position.x then
+	    	msg.post("controller#script", "reset")
+		end
+
+	    -- Reset volatile state
+	    self.correction = vmath.vector3()
+		self.ground_contact = false
 	end
-
-    -- Reset volatile state
-    self.correction = vmath.vector3()
-    self.ground_contact = false
 end
 
 local function handle_geometry_contact(self, normal, distance)
@@ -124,7 +130,7 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
-		print(self.game_mode)
+		print('hero ' .. self.game_mode)
     end
 end
 

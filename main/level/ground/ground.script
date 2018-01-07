@@ -21,21 +21,26 @@ end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
 function update(self, timeSinceLastCall) 
-	-- Iterate over all the ground game objects.
-    for i, piece in ipairs(pieces) do 
-        local position = go.get_position(piece)
-        
-        if position.x <= OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
-            position.x = RIGHT_OF_GROUND + (position.x + GROUND_WIDTH)
-        end
-        
-		position.x = position.x - self.velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
-        go.set_position(position, piece) -- Update the object’s position with the new velocity.
-    end
+	if self.game_mode ~= GAME_MODES[1] then
+		-- Iterate over all the ground game objects.
+	    for i, piece in ipairs(pieces) do 
+	        local position = go.get_position(piece)
+	        
+	        if position.x <= OFF_SCREEN_LEFT then -- Store the current position in a local variable, then if the current object is on the leftmost edge, move it to the rightmost edge.
+	            position.x = RIGHT_OF_GROUND + (position.x + GROUND_WIDTH)
+	        end
+	        
+			position.x = position.x - self.velocity * timeSinceLastCall -- Decrease the current X-position with the set velocity. Multiply with dt to get framerate independent velocity in pixels/s.
+	        go.set_position(position, piece) -- Update the object’s position with the new velocity.
+		end
+	end
 end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("set_velocity") then 
-    	self.velocity = message.velocity
+		self.velocity = message.velocity
+	elseif message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
+		print('ground ' .. self.game_mode)
     end
 end

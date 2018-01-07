@@ -31,7 +31,9 @@ local function update_animation(self)
 end
 
 function update(self, timeSinceLastCall)        
-    update_animation(self)
+	if self.game_mode ~= GAME_MODES[1] then
+		update_animation(self)
+	end
 end
 
 local function handle_geometry_contact(self, normal, distance)
@@ -47,6 +49,9 @@ function on_message(self, message_id, message, sender)
         
         go.set(".", "euler.z", 0)
         go.set_position(self.position)
-        msg.post("#collisionobject", "enable")
+		msg.post("#collisionobject", "enable")
+	elseif message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
+		print('unicorn ' .. self.game_mode)
     end
 end
