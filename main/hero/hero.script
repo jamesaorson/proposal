@@ -121,7 +121,10 @@ function on_message(self, message_id, message, sender)
             elseif message.group == hash("geometry") then
             local oldXPosition = self.position.x
             handle_geometry_contact(self, message.normal, message.distance)
-        end
+		end
+	elseif message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
+		print(self.game_mode)
     end
 end
 

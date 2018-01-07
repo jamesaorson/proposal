@@ -1,0 +1,27 @@
+local GAME_MODES = {
+	'beginning_animation',
+	'play',
+	'ending_animation'
+}
+
+function init(self)
+	self.game_mode = GAME_MODES[1]
+	msg.post("hero#script", "set_game_mode", { game_mode = self.game_mode })
+	msg.post("ground/controller#script", "set_game_mode", { game_mode = self.game_mode })
+	msg.post("unicorn#script", "set_game_mode", { game_mode = self.game_mode })
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+end

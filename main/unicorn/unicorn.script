@@ -1,0 +1,52 @@
+function init(self)
+    self.position = go.get_position()
+    self.originalXPosition = self.position.x
+    msg.post("#", "reset")
+end
+
+function final(self)
+end
+
+local function play_animation(self, animation)
+    -- Only play animations which are not already playing
+    if self.animation ~= animation then
+        -- Tell the spine model to play the animation
+        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
+        -- Remember which animation is playing
+        self.animation = animation
+    end
+end
+
+local function update_animation(self)
+    -- make sure the right animation is playing
+    if self.ground_contact then
+        play_animation(self, hash("run_left"))
+    else
+        if self.velocity.y > 0 then
+            play_animation(self, hash("jump_left"))
+        else
+            play_animation(self, hash("fall_left"))
+        end
+    end
+end
+
+function update(self, timeSinceLastCall)        
+    update_animation(self)
+end
+
+local function handle_geometry_contact(self, normal, distance)
+	
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("reset") then
+        self.velocity = vmath.vector3(0, 0, 0)
+        self.correction = vmath.vector3()
+        self.ground_contact = false
+        self.animation = nil
+        
+        go.set(".", "euler.z", 0)
+        go.set_position(self.position)
+        msg.post("#collisionobject", "enable")
+    end
+end
