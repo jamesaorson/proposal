@@ -6,10 +6,9 @@ GAME_MODES = {
 
 function init(self)
 	self.game_mode = GAME_MODES[1]
-	msg.post("hero#script", "set_game_mode", { game_mode = self.game_mode })
-	msg.post("ground/controller#script", "set_game_mode", { game_mode = self.game_mode })
-	msg.post("unicorn#script", "set_game_mode", { game_mode = self.game_mode })
-	msg.post("background/controller#script", "set_game_mode", { game_mode = self.game_mode })
+	self.start_time = os.time()
+	
+	send_game_mode_message(self.game_mode)
 end
 
 function final(self)
@@ -18,11 +17,21 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Remove this function if not needed
+	if os.difftime(os.time(), self.start_time) > 2 then
+		self.game_mode = GAME_MODES[2]
+		
+		send_game_mode_message(self.game_mode)
+	end
 end
 
 function on_message(self, message_id, message, sender)
 	-- Add message-handling code here
 	-- Remove this function if not needed
+end
+
+function send_game_mode_message(mode)
+	msg.post("hero#script", "set_game_mode", { game_mode = mode })
+	msg.post("ground/controller#script", "set_game_mode", { game_mode = mode })
+	msg.post("unicorn#script", "set_game_mode", { game_mode = mode })
+	msg.post("background/controller#script", "set_game_mode", { game_mode = mode })
 end
