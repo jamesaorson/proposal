@@ -1,3 +1,4 @@
+coinsCollected = 0
 local DEFAULT_VELOCITY = 450
 local GRID = 500
 local PLATFORM_HEIGHTS = { 100, 200, 350 } 
@@ -10,7 +11,6 @@ function init(self)
     self.gridw = 0
     -- Use a table to store all spawned platforms
     self.platforms = {}
-    self.coinsCollected = 0
 end
 
 function update(self, timeSinceLastCall)
@@ -51,7 +51,9 @@ function on_message(self, message_id, message, sender)
 	-- The “reset” message deletes all platforms stored in the table
     if message_id == hash("reset") then 
         -- Tell the hero to reset.
-        msg.post("hero#script", "reset")
+		msg.post("hero#script", "reset")
+		msg.post("unicorn#script", "reset")
+		msg.post("controller#control_flow", "reset")
         
 		-- Delete all platforms
         for i, platform in ipairs(self.platforms) do
@@ -60,7 +62,7 @@ function on_message(self, message_id, message, sender)
         
         self.platforms = {}
         
-        self.coinsCollected = 0
+        coinsCollected = 0
     	label.set_text("score#score", 0)
 		    	
 		self.velocity = DEFAULT_VELOCITY
@@ -75,8 +77,8 @@ function on_message(self, message_id, message, sender)
             end
         end
     elseif message_id == hash("coin_collection") then
-    	self.coinsCollected = self.coinsCollected + 1
-		label.set_text("score#score", self.coinsCollected)
+    	coinsCollected = coinsCollected + 1
+		label.set_text("score#score", coinsCollected)
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
 	end

@@ -48,10 +48,6 @@ function update(self, timeSinceLastCall)
 	end
 end
 
-local function handle_geometry_contact(self, normal, distance)
-	
-end
-
 function on_message(self, message_id, message, sender)
     if message_id == hash("reset") then
         self.velocity = vmath.vector3(0, 0, 0)

@@ -27,13 +27,20 @@ function update(self, dt)
 			send_game_mode_message(self.game_mode)
 		end
 	elseif self.game_mode == GAME_MODES[2] then
+		if coinsCollected > 50 then
+			self.game_mode = GAME_MODES[3]
+		end
 	elseif self.game_mode == GAME_MODES[3] then
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Remove this function if not needed
+	if message_id == hash("reset") then
+		self.game_mode = GAME_MODES[1]
+		self.start_time = os.time()
+
+		send_game_mode_message(self.game_mode)
+	end
 end
 
 function send_game_mode_message(mode)
