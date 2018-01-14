@@ -32,7 +32,19 @@ end
 
 function update(self, timeSinceLastCall)        
 	if self.game_mode ~= GAME_MODES[1] then
+		self.velocity.x = self.velocity.x + 15
+		-- Apply velocity to the player character
+		go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
+
 		update_animation(self)
+
+		if self.originalXPosition - 15 > self.position.x then
+			msg.post("controller#script", "reset")
+		end
+
+		-- Reset volatile state
+		self.correction = vmath.vector3()
+		self.ground_contact = false
 	end
 end
 
@@ -49,7 +61,6 @@ function on_message(self, message_id, message, sender)
         
         go.set(".", "euler.z", 0)
         go.set_position(self.position)
-		msg.post("#collisionobject", "enable")
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
 		print('unicorn ' .. self.game_mode)
