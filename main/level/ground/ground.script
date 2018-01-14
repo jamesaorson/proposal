@@ -41,6 +41,5 @@ function on_message(self, message_id, message, sender)
 		self.velocity = message.velocity
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
-		print('ground ' .. self.game_mode)
     end
 end

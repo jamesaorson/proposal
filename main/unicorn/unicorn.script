@@ -63,7 +63,6 @@ function on_message(self, message_id, message, sender)
         go.set_position(self.position)
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
-		print('unicorn ' .. self.game_mode)
 	elseif message_id == hash("set_animation") then
 		play_animation(self, message.animation)
     end

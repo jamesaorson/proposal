@@ -22,7 +22,6 @@ function update(self, timeSinceLastCall)
 
 	        -- Maybe spawn a platform at random height
 			if math.random() > 0.2 then
-				print('create ' .. self.game_mode)
 	            local height = PLATFORM_HEIGHTS[math.random(#PLATFORM_HEIGHTS)]
 				local url = "#platform_factory"
 	            
