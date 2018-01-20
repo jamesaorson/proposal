@@ -28,6 +28,9 @@ images {
 images {
   image: "/main/level/images/ring_planet.png"
 }
+images {
+  image: "/main/level/images/exclamation.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

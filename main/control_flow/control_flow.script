@@ -1,14 +1,20 @@
 GAME_MODES = {
 	'beginning_animation',
+	'unicorn_run',
 	'play',
+	'ending_setup',
 	'ending_animation'
 }
 
+BEGINNING_ANIMATION = GAME_MODES[1]
+UNICORN_RUN = GAME_MODES[2]
+PLAY = GAME_MODES[3]
+ENDING_SETUP = GAME_MODES[4]
+ENDING_ANIMATION = GAME_MODES[5]
+
 function init(self)
-	self.game_mode = GAME_MODES[1]
 	self.start_time = os.time()
-	
-	send_game_mode_message(self.game_mode)
+	change_game_mode(self, BEGINNING_ANIMATION)
 end
 
 function final(self)
@@ -17,36 +23,47 @@ function final(self)
 end
 
 function update(self, dt)
-	if self.game_mode == GAME_MODES[1] then
+	if self.game_mode == BEGINNING_ANIMATION then
 		if os.difftime(os.time(), self.start_time) > 2 and os.difftime(os.time(), self.start_time) < 4 then
+			msg.post("exclamation#script", "set_z_position", { z_position = 0 })
+			change_game_mode(self, UNICORN_RUN)
 			msg.post("unicorn#script", "set_animation", { animation = 'run_right' })
 		end
+	elseif self.game_mode == UNICORN_RUN then
 		if os.difftime(os.time(), self.start_time) > 4 then
-			self.game_mode = GAME_MODES[2]
-			
-			send_game_mode_message(self.game_mode)
+			change_game_mode(self, PLAY)
+			msg.post("exclamation#script", "set_z_position", { z_position = -1 })
 		end
-	elseif self.game_mode == GAME_MODES[2] then
-		if coinsCollected > 50 then
-			self.game_mode = GAME_MODES[3]
+	elseif self.game_mode == PLAY then
+		if coinsCollected > 10 then
+			self.start_time = os.time()
+			change_game_mode(self, ENDING_SETUP)
 		end
-	elseif self.game_mode == GAME_MODES[3] then
+	elseif self.game_mode == ENDING_SETUP then
+		if os.difftime(os.time(), self.start_time) > 4.6 then
+			self.start_time = os.time()
+			change_game_mode(self, ENDING_ANIMATION)
+		end
+	elseif self.game_mode == ENDING_ANIMATION then
+		msg.post("hero#script", "set_animation", { animation = 'idle_right' })
 	end
+end
+
+function change_game_mode(self, game_mode)
+	self.game_mode = game_mode
+	send_game_mode_message(game_mode)
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("reset") then
-		self.game_mode = GAME_MODES[1]
 		self.start_time = os.time()
-
-		send_game_mode_message(self.game_mode)
+		change_game_mode(self, BEGINNING_ANIMATION)
 	end
 end
 
 function send_game_mode_message(mode)
 	msg.post("hero#script", "set_game_mode", { game_mode = mode })
 	msg.post("unicorn#script", "set_game_mode", { game_mode = mode })
-
 	msg.post("controller#script", "set_game_mode", { game_mode = mode })
 	msg.post("ground/controller#script", "set_game_mode", { game_mode = mode })	
 	msg.post("background/controller#script", "set_game_mode", { game_mode = mode })

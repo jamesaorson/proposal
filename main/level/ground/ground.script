@@ -21,7 +21,7 @@ end
 
 -- update() is called once each frame, typically 60 times per second. dt contains the number of seconds since the last call.
 function update(self, timeSinceLastCall) 
-	if self.game_mode ~= GAME_MODES[1] then
+	if self.game_mode == PLAY or self.game_mode == ENDING_SETUP then
 		-- Iterate over all the ground game objects.
 	    for i, piece in ipairs(pieces) do 
 	        local position = go.get_position(piece)

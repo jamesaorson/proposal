@@ -25,7 +25,8 @@ end
 function create_coins(self, params)
     local spacing = 56
     local position = go.get_position()
-    local x = position.x - params.coins * (spacing * 0.5) - 24
+	local x = position.x - params.coins * (spacing * 0.5) - 24
+	
     for i = 1, params.coins do
     	local url = "#coin_factory"
     	local position = vmath.vector3(x + i * spacing , position.y + 64, 1)

@@ -1,6 +1,9 @@
+local ENDING_X_POSITION = 750
+
 function init(self)
     self.position = go.get_position()
-    self.originalXPosition = self.position.x
+	self.originalXPosition = self.position.x
+	self.velocity = vmath.vector3(0, 0, 0)
     msg.post("#", "reset")
 end
 
@@ -31,8 +34,18 @@ local function update_animation(self)
 end
 
 function update(self, timeSinceLastCall)        
-	if self.game_mode ~= GAME_MODES[1] then
-		self.velocity.x = self.velocity.x + 15
+	if self.game_mode == UNICORN_RUN or self.game_mode == ENDING_SETUP then
+		if self.game_mode == UNICORN_RUN then
+			self.velocity.x = self.velocity.x + 19
+		elseif self.game_mode == ENDING_SETUP then
+			play_animation(self, hash("idle_right"))
+			
+			if go.get_position().x < ENDING_X_POSITION then
+				self.velocity.x = 0
+			else
+				self.velocity.x = -450
+			end
+		end
 		-- Apply velocity to the player character
 		go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
 
@@ -45,6 +58,7 @@ function update(self, timeSinceLastCall)
 		-- Reset volatile state
 		self.correction = vmath.vector3()
 		self.ground_contact = false
+	elseif self.game_mode == PLAY then
 	end
 end
 
@@ -53,7 +67,7 @@ function on_message(self, message_id, message, sender)
         self.velocity = vmath.vector3(0, 0, 0)
         self.correction = vmath.vector3()
         self.ground_contact = false
-        self.animation = nil
+		play_animation(self, hash("idle_right"))
         
         go.set(".", "euler.z", 0)
         go.set_position(self.position)

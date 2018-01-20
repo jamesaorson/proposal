@@ -21,19 +21,17 @@ function final(self)
 end
 
 local function play_animation(self, animation)
-	if self.game_mode ~= GAME_MODES[1] then
-	    -- Only play animations which are not already playing
-	    if self.animation ~= animation then
-	        -- Tell the spine model to play the animation
-	        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
-	        -- Remember which animation is playing
-	        self.animation = animation
-		end
+    -- Only play animations which are not already playing
+    if self.animation ~= animation then
+        -- Tell the spine model to play the animation
+        spine.play("#spinemodel", animation, go.PLAYBACK_LOOP_FORWARD, 0.15)
+        -- Remember which animation is playing
+        self.animation = animation
 	end
 end
 
 local function update_animation(self)
-	if self.game_mode ~= GAME_MODES[1] then
+	if self.game_mode == PLAY or self.game_mode == ENDING_SETUP then
 	    -- make sure the right animation is playing
 	    if self.ground_contact then
 	        play_animation(self, hash("run_right"))
@@ -48,13 +46,16 @@ local function update_animation(self)
 end
 
 function update(self, timeSinceLastCall)
-	if self.game_mode ~= GAME_MODES[1] then
+	if self.game_mode == PLAY or self.game_mode == ENDING_SETUP then
 	    local GRAVITY = vmath.vector3(0, GRAVITY, 0)
 
 	    if not self.ground_contact then
 	        -- Apply gravity if there's no ground contact
 	        self.velocity = self.velocity + GRAVITY
-	    end
+		end
+		if self.game_mode == ENDING_SETUP then
+			self.velocity.x = self.velocity.x + 0.6
+		end
 
 	    -- Apply velocity to the player character
 	    go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
@@ -68,6 +69,8 @@ function update(self, timeSinceLastCall)
 	    -- Reset volatile state
 	    self.correction = vmath.vector3()
 		self.ground_contact = false
+	elseif self.game_mode == ENDING_ANIMATION then
+		
 	end
 end
 
@@ -100,16 +103,15 @@ local function handle_geometry_contact(self, normal, distance)
 end
 
 function on_message(self, message_id, message, sender)
-    if message_id == hash("reset") then
+	if message_id == hash("reset") then
+		msg.post("#collisionobject", "enable")
+		play_animation(self, hash("idle_right"))
         self.velocity = vmath.vector3(0, 0, 0)
         self.correction = vmath.vector3()
         self.ground_contact = false
-        self.animation = nil
         
         go.set(".", "euler.z", 0)
         go.set_position(self.position)
-        msg.post("#collisionobject", "enable")
-
     elseif message_id == hash("contact_point_response") then
         -- Check if we received a contact point message
         if message.group == hash("danger") then
@@ -130,7 +132,9 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("set_game_mode") then
 		self.game_mode = message.game_mode
-    end
+	elseif message_id == hash("set_animation") then
+		play_animation(self, message.animation)
+	end
 end
 
 local function jump(self)
