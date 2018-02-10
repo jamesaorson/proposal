@@ -1,5 +1,5 @@
 [project]
-title = My project
+title = Dat Boi
 version = 0.1
 
 [bootstrap]
@@ -19,4 +19,12 @@ debug = 0
 
 [script]
 shared_state = 1
+
+[android]
+app_icon_36x36 = /main/hero/images/Head01.png
+app_icon_48x48 = /main/hero/images/Head01.png
+app_icon_72x72 = /main/hero/images/Head01.png
+app_icon_96x96 = /main/hero/images/Head01.png
+app_icon_144x144 = /main/hero/images/Head01.png
+app_icon_192x192 = /main/hero/images/Head01.png
 
