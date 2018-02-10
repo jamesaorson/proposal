@@ -64,6 +64,7 @@ end
 function send_game_mode_message(mode)
 	msg.post("hero#script", "set_game_mode", { game_mode = mode })
 	msg.post("unicorn#script", "set_game_mode", { game_mode = mode })
+	msg.post("ending_unicorn#script", "set_game_mode", { game_mode = mode })
 	msg.post("controller#script", "set_game_mode", { game_mode = mode })
 	msg.post("ground/controller#script", "set_game_mode", { game_mode = mode })	
 	msg.post("background/controller#script", "set_game_mode", { game_mode = mode })

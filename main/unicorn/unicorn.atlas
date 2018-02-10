@@ -97,6 +97,9 @@ images {
 images {
   image: "/main/unicorn/images/ThighR.png"
 }
+images {
+  image: "/main/unicorn/images/left_idle.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

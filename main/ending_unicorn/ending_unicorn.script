@@ -1,0 +1,45 @@
+local ENDING_X_POSITION = 750
+
+function init(self)
+	self.velocity = vmath.vector3(0, 0, 0)
+	self.startingPosition = go.get_position()
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, timeSinceLastCall)
+	if self.game_mode == ENDING_SETUP then
+		if go.get_position().x < ENDING_X_POSITION then
+			self.velocity.x = 0
+		else
+			self.velocity.x = -450
+		end
+	else
+		self.velocity.x = 0
+	end
+	
+	go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_game_mode") then
+		self.game_mode = message.game_mode
+	elseif message_id == hash("reset") then
+		self.velocity = vmath.vector3(0, 0, 0)
+
+		go.set_position(self.startingPosition)
+	end
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end

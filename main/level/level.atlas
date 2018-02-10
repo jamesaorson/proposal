@@ -29,7 +29,7 @@ images {
   image: "/main/level/images/ring_planet.png"
 }
 images {
-  image: "/main/level/images/exclamation.png"
+  image: "/main/level/images/beginning-dialogue.png"
 }
 margin: 0
 extrude_borders: 0

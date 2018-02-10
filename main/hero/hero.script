@@ -69,8 +69,17 @@ function update(self, timeSinceLastCall)
 	    -- Reset volatile state
 	    self.correction = vmath.vector3()
 		self.ground_contact = false
-	elseif self.game_mode == ENDING_ANIMATION then
-		
+	elseif self.game_mode == ENDING_ANIMATION and go.get_position().y > 70 then
+		print(go.get_position())
+		self.velocity.x = 0
+		local GRAVITY = vmath.vector3(0, GRAVITY, 0)
+		if not self.ground_contact then
+			-- Apply gravity if there's no ground contact
+			self.velocity = self.velocity + GRAVITY
+		else
+			self.velocity = vmath.vector3(0, 0, 0)
+		end
+		go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
 	end
 end
 
@@ -99,7 +108,11 @@ local function handle_geometry_contact(self, normal, distance)
     if projection < 0 then
         -- Remove that component in that case
         self.velocity = self.velocity - projection * normal
-    end
+	end
+
+	if self.game_mode == ENDING_ANIMATION then
+		msg.post("#collisionobject", "disable")
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -154,11 +167,13 @@ local function abort_jump(self)
 end
 
 function on_input(self, action_id, action)
-    if action_id == hash("jump") or action_id == hash("touch") then
-        if action.pressed then
-            jump(self)
-        elseif action.released then
-            abort_jump(self)
-        end
-    end
+	if self.game_mode ~= ENDING_ANIMATION then
+	    if action_id == hash("jump") or action_id == hash("touch") then
+	        if action.pressed then
+	            jump(self)
+	        elseif action.released then
+	            abort_jump(self)
+	        end
+		end
+	end
 end

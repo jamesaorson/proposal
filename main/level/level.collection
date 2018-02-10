@@ -4,8 +4,8 @@ instances {
   prototype: "/main/hero/hero.go"
   position {
     x: 100.0
-    y: 13.0
-    z: 0.0
+    y: 11.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -25,7 +25,7 @@ instances {
   position {
     x: 651.0
     y: 11.0
-    z: 0.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -43,9 +43,9 @@ instances {
   id: "exclamation"
   prototype: "/main/exclamation/exclamation.go"
   position {
-    x: 79.0
-    y: 120.0
-    z: -1.0
+    x: 167.0
+    y: 92.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -57,6 +57,26 @@ instances {
     x: 1.0
     y: 1.0
     z: 1.0
+  }
+}
+instances {
+  id: "ending_unicorn"
+  prototype: "/main/ending_unicorn/ending_unicorn.go"
+  position {
+    x: 2992.0
+    y: 27.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.8
+    y: 0.8
+    z: 0.8
   }
 }
 collection_instances {

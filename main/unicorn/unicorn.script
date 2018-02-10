@@ -37,14 +37,6 @@ function update(self, timeSinceLastCall)
 	if self.game_mode == UNICORN_RUN or self.game_mode == ENDING_SETUP then
 		if self.game_mode == UNICORN_RUN then
 			self.velocity.x = self.velocity.x + 19
-		elseif self.game_mode == ENDING_SETUP then
-			play_animation(self, hash("idle_right"))
-			
-			if go.get_position().x < ENDING_X_POSITION then
-				self.velocity.x = 0
-			else
-				self.velocity.x = -450
-			end
 		end
 		-- Apply velocity to the player character
 		go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
