@@ -45,7 +45,7 @@ instances {
   position {
     x: 167.0
     y: 92.0
-    z: 1.0
+    z: -1.0
   }
   rotation {
     x: 0.0
@@ -77,6 +77,26 @@ instances {
     x: 0.8
     y: 0.8
     z: 0.8
+  }
+}
+instances {
+  id: "ending_dialogue"
+  prototype: "/main/ending_dialogue/ending_dialogue.go"
+  position {
+    x: 631.0
+    y: 92.0
+    z: -1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
   }
 }
 collection_instances {

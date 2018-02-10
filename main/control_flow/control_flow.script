@@ -40,12 +40,15 @@ function update(self, dt)
 			change_game_mode(self, ENDING_SETUP)
 		end
 	elseif self.game_mode == ENDING_SETUP then
-		if os.difftime(os.time(), self.start_time) > 4.6 then
+		if self.hero_ready then
 			self.start_time = os.time()
 			change_game_mode(self, ENDING_ANIMATION)
 		end
 	elseif self.game_mode == ENDING_ANIMATION then
 		msg.post("hero#script", "set_animation", { animation = 'idle_right' })
+		if os.difftime(os.time(), self.start_time) > 2 then
+			msg.post("ending_dialogue#script", "set_z_position", { z_position = 1 })
+		end
 	end
 end
 
@@ -58,6 +61,8 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("reset") then
 		self.start_time = os.time()
 		change_game_mode(self, BEGINNING_ANIMATION)
+	elseif message_id == hash("hero_ready") then
+		self.hero_ready = true
 	end
 end
 

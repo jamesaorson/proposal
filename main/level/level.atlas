@@ -31,6 +31,9 @@ images {
 images {
   image: "/main/level/images/beginning-dialogue.png"
 }
+images {
+  image: "/main/level/images/ending-dialogue.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

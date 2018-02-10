@@ -11,7 +11,8 @@ function init(self)
     
     -- Save position
     self.position = go.get_position()
-    self.originalXPosition = self.position.x
+	self.original_x_Position = 100
+	self.origianl_y_position = 11
     msg.post("#", "reset")
 end
 
@@ -62,7 +63,7 @@ function update(self, timeSinceLastCall)
 	    
 	    update_animation(self)
 	    
-	    if self.originalXPosition - 15 > self.position.x then
+	    if self.original_x_Position - 15 > self.position.x then
 	    	msg.post("controller#script", "reset")
 		end
 
@@ -80,6 +81,10 @@ function update(self, timeSinceLastCall)
 			self.velocity = vmath.vector3(0, 0, 0)
 		end
 		go.set_position(go.get_position() + self.velocity * timeSinceLastCall)
+	end
+
+	if go.get_position().x > 540 then
+		msg.post("controller#control_flow", "hero_ready")
 	end
 end
 
