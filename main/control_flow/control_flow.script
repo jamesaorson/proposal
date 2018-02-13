@@ -35,7 +35,7 @@ function update(self, dt)
 			msg.post("exclamation#script", "set_z_position", { z_position = -1 })
 		end
 	elseif self.game_mode == PLAY then
-		if coinsCollected > 10 then
+		if coinsCollected > 29 then
 			self.start_time = os.time()
 			change_game_mode(self, ENDING_SETUP)
 		end

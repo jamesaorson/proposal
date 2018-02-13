@@ -14,9 +14,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 1.5
+    y: 1.5
+    z: 1.5
   }
 }
 instances {
@@ -34,17 +34,17 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 1.5
+    y: 1.5
+    z: 1.5
   }
 }
 instances {
   id: "exclamation"
   prototype: "/main/exclamation/exclamation.go"
   position {
-    x: 167.0
-    y: 92.0
+    x: 199.0
+    y: 122.0
     z: -1.0
   }
   rotation {
@@ -54,9 +54,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 2.0
+    y: 2.0
+    z: 2.0
   }
 }
 instances {
@@ -64,7 +64,7 @@ instances {
   prototype: "/main/ending_unicorn/ending_unicorn.go"
   position {
     x: 2992.0
-    y: 27.0
+    y: 40.0
     z: 1.0
   }
   rotation {
@@ -74,17 +74,17 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 0.8
-    y: 0.8
-    z: 0.8
+    x: 1.2
+    y: 1.2
+    z: 1.2
   }
 }
 instances {
   id: "ending_dialogue"
   prototype: "/main/ending_dialogue/ending_dialogue.go"
   position {
-    x: 631.0
-    y: 92.0
+    x: 697.0
+    y: 145.0
     z: -1.0
   }
   rotation {
@@ -94,9 +94,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 2.0
+    y: 2.0
+    z: 2.0
   }
 }
 collection_instances {
