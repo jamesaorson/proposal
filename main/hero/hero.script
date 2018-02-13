@@ -179,6 +179,9 @@ function on_input(self, action_id, action)
 	        elseif action.released then
 	            abort_jump(self)
 	        end
-		end
-	end
+        end
+    end
+    if action_id == hash("reset") then
+        msg.post("controller#script", "reset")
+    end
 end

@@ -56,7 +56,9 @@ function on_message(self, message_id, message, sender)
 		msg.post("hero#script", "reset")
 		msg.post("ending_unicorn#script", "reset")
 		msg.post("unicorn#script", "reset")
-		msg.post("controller#control_flow", "reset")
+        msg.post("controller#control_flow", "reset")
+        msg.post("exclamation#script", "set_z_position", { z_position = -1 })
+        msg.post("ending_dialogue#script", "set_z_position", { z_position = -1 })
         
 		-- Delete all platforms
         for i, platform in ipairs(self.platforms) do

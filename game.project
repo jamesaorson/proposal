@@ -27,4 +27,5 @@ app_icon_72x72 = /main/hero/images/Head01.png
 app_icon_96x96 = /main/hero/images/Head01.png
 app_icon_144x144 = /main/hero/images/Head01.png
 app_icon_192x192 = /main/hero/images/Head01.png
+input_method = HiddenInputField
 
